@@ -31,7 +31,7 @@ export default {
 }
 </script>
     
-<style lang="css">
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
 
 * {
@@ -90,12 +90,13 @@ p {
 
 ::-webkit-scrollbar {
     width: 10px;
+    background-color: #025464;
 }
 
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #025464;
+    background: #e57c23;
     border-radius: 0;
 }
 
@@ -130,4 +131,4 @@ p {
     }
 
 }
-</style> 
+</style>

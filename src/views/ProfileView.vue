@@ -1,10 +1,12 @@
 <template>
     <div class="sambutan">
-        <h1>{{ msg }}</h1>
+        <h1>Halo, {{ msg }}</h1>
 
     </div>
     <div>
-        <h4>{{ wpm }}</h4>
+        <h4>Id: {{ id }}</h4>
+        <h4>Email: {{ email }}</h4>
+        <h4>Highest WPM: {{ wpm }} WPM</h4>
     </div>
     <button v-on:click="logout" class="keluar">Logout!</button>
 </template>
@@ -41,21 +43,27 @@ export default {
     data() {
         return {
             msg: '',
-            wpm:''
+            wpm:'',
+            id:'',
+            email:''
         }
     },
     methods: {
         logout() {
             $cookies.remove('user');
-            $router.push('/');
+            $router.push('/').then(()=>{
+                location.reload();
+            })
         }
     },
     mounted() {
         if(!$cookies.get('user')) {
-            $router.push('/')
+            $router.push('/login');
         } else {
-            this.wpm = 'Highest WPM : ' + $cookies.get('user').best_wpm + ' WPM';
-            this.msg = 'Halo, ' + $cookies.get('user').username;
+            this.id = $cookies.get('user').id;
+            this.email = $cookies.get('user').email;
+            this.wpm = $cookies.get('user').best_wpm;
+            this.msg = $cookies.get('user').username;
         }
     }
 }

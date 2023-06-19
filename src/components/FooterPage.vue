@@ -7,22 +7,21 @@
                     typefist</h1>
             </div>
             <div class="col-sm">
-                <a href="">
                     <h3>Useful Links</h3>
+                <a href="/profile">
+                    <h5 v-if="username">profile</h5>
+                    <h5 v-else>sign in</h5>
                 </a>
-                <a href="">
-                    <h5>sign up</h5>
-                </a>
-                <a href="">
+                <a href="/about">
                     <h5>about us</h5>
                 </a>
-                <a href="">
+                <a href="/tos">
                     <h5>terms of service</h5>
                 </a>
             </div>
             <div class="col-sm">
                 <h3>Community</h3>
-                <a href="">
+                <a href="https://discord.gg/2YcKwwT5">
                     <h5>Discord</h5>
                 </a>
             </div>
@@ -82,3 +81,21 @@ h4 {
     }
 }
 </style>
+
+<script>
+import $cookies from 'vue-cookies'
+
+export default {
+    data() {
+        return {
+            username: '',
+        };
+    },
+    created() {
+        const signedIn = $cookies.get('user');
+        if (signedIn) {
+            this.username = $cookies.get('user').username;
+        }
+    }
+}
+</script>

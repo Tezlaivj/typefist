@@ -28,245 +28,12 @@
     </div>
 </template>
 
-<style>
-.gamu * {
-    margin: 0;
-    padding: 0;
-    font-family: Verdana;
-    box-sizing: border-box;
-}
-
-.gamu {
-    display: flex;
-    padding: 0 10%;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh;
-    background-color: #F8F1F1;
-}
-
-#paragraph {
-    color: #646669;
-}
-
-.result-details {
-    color: white;
-}
-
-::selection {
-    color: white;
-    background: #007acc;
-}
-
-.wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    padding: 3%;
-    background: #1e1e1e;
-    border-radius: 10px;
-}
-
-.wrapper .input-field {
-    opacity: 0%;
-    z-index: -999;
-    position: absolute;
-}
-
-.wrapper .content-box {
-    margin: 0%;
-    padding: 1% 3% 0;
-    width: 95%;
-    border-radius: 10px;
-    border: 3px solid #007acc;
-}
-
-.content-box .typing-text {
-    overflow: hidden;
-    max-height: 160px;
-}
-
-.typing-text::-webkit-scrollbar {
-    width: 0;
-}
-
-.typing-text p {
-    font-size: 21px;
-    text-align: justify;
-    letter-spacing: 1px;
-    word-break: break-all;
-}
-
-.typing-text p span {
-    position: relative;
-}
-
-.typing-text p span.correct {
-    color: whitesmoke;
-}
-
-.typing-text p span.incorrect {
-    color: red;
-    border-radius: 4px;
-}
-
-@keyframes blink {
-    50% {
-        opacity: 1;
-    }
-}
-
-span.active::before {
-    position: absolute;
-    color: whitesmoke;
-    content: "";
-    height: 2px;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    border-radius: 5px;
-    background: #007acc;
-    opacity: 0;
-    animation: blink 1s ease-in-out infinite;
-}
-
-
-.content-box .content {
-    margin-top: 3%;
-    display: flex;
-    padding: 3% 0;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 3px solid #007acc;
-}
-
-.content button {
-    outline: none;
-    border: none;
-    width: 14%;
-    color: #007acc;
-    padding: 1% 0;
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 15px;
-    border: 3px solid #007acc;
-    background: none;
-    transition: transform 0.2s ease;
-}
-
-.content button:active {
-    transform: scale(0.9);
-}
-
-.content button:hover {
-    background: whitesmoke;
-}
-
-.content .result-details {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 80%;
-    justify-content: space-between;
-}
-
-.result-details li {
-    display: flex;
-    height: 5%;
-    list-style: none;
-    position: relative;
-    align-items: center;
-}
-
-.result-details li:not(:first-child) {
-    padding-left: 8%;
-    border-left: 2px solid white;
-}
-
-.result-details li p {
-    font-size: 15px;
-}
-
-.result-details li span {
-    display: block;
-    font-size: 13px;
-    margin-left: 10%;
-}
-
-li span b {
-    font-weight: 500;
-}
-
-li:not(:first-child) span {
-    font-weight: 500;
-}
-
-@media (max-width: 745px) {
-    .wrapper {
-        padding: 5%;
-
-    }
-
-    .content-box .content {
-        padding: 5% 0;
-    }
-
-    .content-box .typing-text {
-        max-height: 100%;
-    }
-
-    .typing-text p {
-        font-size: 19px;
-        text-align: left;
-    }
-
-    .content button {
-        width: 100%;
-        font-size: 15px;
-        padding: 5% 0;
-        margin-top: 15%;
-    }
-
-    .content .result-details {
-        width: 100%;
-    }
-
-    .result-details li:not(:first-child) {
-        border-left: 0;
-        padding: 0;
-    }
-
-    .result-details li p,
-    .result-details li span {
-        font-size: 15px;
-    }
-}
-
-@media (max-width: 510px) {
-    .wrapper .content-box {
-        padding: 5% 7% 0;
-    }
-
-    .typing-text p {
-        font-size: 13px;
-    }
-
-    .result-details li {
-        margin-bottom: 5%;
-    }
-
-    .content button {
-        margin-top: 5%;
-    }
-}
-</style>
-
 <script>
 
-/*window.addEventListener("load", function () {
+window.addEventListener("load", function () {
+    const $cookies = require('vue-cookies');
+    const SignedIn = $cookies.get('user');
+
     const paragraph = [
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis tempor orci in consectetur. Fusce viverra est eget nunc placerat scelerisque. Morbi quis ipsum gravida, vulputate nunc a, faucibus urna. Proin consectetur sed tellus id dictum. Integer eros nisl, aliquam elementum laoreet id, finibus non enim. Sed et ullamcorper nunc, ut ornare justo. Cras in tellus lectus. In hac habitasse platea dictumst. Aenean vestibulum orci nec ultrices vestibulum. Pellentesque interdum enim eu risus sollicitudin gravida nec non dolor. Interdum et malesuada fames ac ante ipsum primis in faucibus.",
         "Nullam placerat dapibus vehicula. Curabitur eu auctor mauris, a congue augue. Nullam a posuere risus. Morbi convallis mauris nunc. Quisque congue, nisl nec aliquet suscipit, orci urna dapibus tellus, id bibendum magna ligula sed diam. Donec quis consequat libero, dignissim dictum est. Praesent sit amet nunc rhoncus, vehicula lorem sed, pretium ligula. Aenean pellentesque nisl quis mauris sodales, ut fringilla nulla molestie.",
@@ -290,17 +57,21 @@ li:not(:first-child) span {
     let mistakes = isTyping;
     let charIndex = mistakes;
 
-    function loadParagraph() {
-        const ranIndex = Math.floor(Math.random() * paragraph.length);
-        typingtext.innerHTML = "";
-        paragraph[ranIndex].split("").forEach(char => {
-            let span = `<span>${char}</span>`
-            typingtext.innerHTML += span;
-        });
+    const gameOn = document.querySelector(".gamu");
 
-        typingtext.querySelectorAll("span")[0].classList.add("active");
-        document.addEventListener("keydown", () => inpField.focus());
-        typingtext.addEventListener("click", () => inpField.focus());
+    function loadParagraph() {
+        if (gameOn) {
+            const ranIndex = Math.floor(Math.random() * paragraph.length);
+            typingtext.innerHTML = "";
+            paragraph[ranIndex].split("").forEach(char => {
+                let span = `<span>${char}</span>`
+                typingtext.innerHTML += span;
+            });
+
+            typingtext.querySelectorAll("span")[0].classList.add("active");
+            document.addEventListener("keydown", () => inpField.focus());
+            typingtext.addEventListener("click", () => inpField.focus());
+        }
     }
 
     function initTyping() {
@@ -342,10 +113,13 @@ li:not(:first-child) span {
             mistakeTag.innerText = mistakes;
             cpmTag.innerText = charIndex - mistakes;
 
-            
+
         } else {
             clearInterval(timer);
             inpField.value = "";
+            if (SignedIn) {
+                console.log($cookies.get('user').best_wpm);
+            }
         }
     }
 
@@ -380,8 +154,209 @@ li:not(:first-child) span {
         cpmTag.innerText = 0;
     }
 
-    loadParagraph();
-    inpField.addEventListener("input", initTyping);
-    tryAgainBtn.addEventListener("click", resetGame);
-});*/
+    if (gameOn) {
+        loadParagraph();
+        inpField.addEventListener("input", initTyping);
+        tryAgainBtn.addEventListener("click", resetGame);
+    }
+})
+
 </script>
+
+<style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
+
+.gamu * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inconsolata', monospace;
+    box-sizing: border-box;
+}
+
+.gamu {
+    display: flex;
+    padding: 0 10%;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    background-color: #E8AA42;
+}
+
+#paragraph {
+    color: #00FFCA !important;
+}
+
+.result-details {
+    color: white;
+}
+
+::selection {
+    color: white;
+    background: #E8AA42;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    padding: 3%;
+    background: #1e1e1e;
+    border-radius: 10px;
+}
+
+.wrapper .input-field {
+    opacity: 0%;
+    z-index: -999;
+    position: absolute;
+}
+
+.wrapper .content-box {
+    margin: 0%;
+    padding: 1% 3% 0;
+    width: 95%;
+    border-radius: 10px;
+    border: 3px solid #E8AA42;
+}
+
+.content-box .typing-text {
+    overflow: hidden;
+    max-height: 160px;
+}
+
+.typing-text::-webkit-scrollbar {
+    width: 0;
+}
+
+.content-box .content {
+    margin-top: 3%;
+    display: flex;
+    padding: 3% 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid #E8AA42;
+}
+
+.content button {
+    outline: none;
+    border: none;
+    width: 14%;
+    color: #E8AA42;
+    padding: 1% 0;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 15px;
+    border: 3px solid #E8AA42;
+    background: none;
+    transition: transform 0.2s ease;
+}
+
+.content button:active {
+    transform: scale(0.9);
+}
+
+.content button:hover {
+    background: whitesmoke;
+    transform: scale(1.1);
+}
+
+.content .result-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.result-details li {
+    display: flex;
+    height: 5%;
+    list-style: none;
+    position: relative;
+    align-items: center;
+}
+
+.result-details li:not(:first-child) {
+    padding-left: 8%;
+    border-left: 2px solid white;
+}
+
+.result-details li p {
+    color: #00FFCA !important;
+    font-size: 15px;
+}
+
+.result-details li span {
+    display: block;
+    font-size: 17px;
+    margin-left: 10%;
+}
+
+li span b {
+    font-weight: 500;
+}
+
+li:not(:first-child) span {
+    font-weight: 500;
+}
+
+@media (max-width: 745px) {
+    .wrapper {
+        padding: 5%;
+
+    }
+
+    .content-box .content {
+        padding: 5% 0;
+    }
+
+    .content-box .typing-text {
+        max-height: 100%;
+    }
+
+    .typing-text p {
+        font-size: 19px;
+    }
+
+    .content button {
+        width: 100%;
+        font-size: 15px;
+        padding: 5% 0;
+        margin-top: 15%;
+    }
+
+    .content .result-details {
+        width: 100%;
+    }
+
+    .result-details li:not(:first-child) {
+        border-left: 0;
+        padding: 0;
+    }
+
+    .result-details li p,
+    .result-details li span {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 510px) {
+    .wrapper .content-box {
+        padding: 5% 7% 0;
+    }
+
+    .typing-text p {
+        font-size: 13px;
+    }
+
+    .result-details li {
+        margin-bottom: 5%;
+    }
+
+    .content button {
+        margin-top: 5%;
+    }
+}
+</style>

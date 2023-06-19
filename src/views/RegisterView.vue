@@ -1,40 +1,42 @@
 <template>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up to typefist</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign up to typefist</title>
+    </head>
 
-<body>
-    <div class="header">
-        <i class="fa fa-keyboard"></i> 
-        <i class="fa-sharp fa-solid fa-house"></i>
-    </div>    
-
-    <div class="signup">
-        <div class="box">
-        <h1>Sign Up</h1>
-        <h4>Already have an account? <a href="/login">Sign in</a></h4>
-        <form @submit.prevent="register">
-            <div class="input-container">
-                <i class="fa-sharp fa-solid fa-user"></i>
-                <input type="text" name="username" placeholder="Username" id="username" v-model="username" required>
-            </div>
-            <div class="input-container">
-                <i class="fa-sharp fa-regular fa-envelope"></i>
-                <input type="email" name="email" placeholder="Email" id="email" v-model="email" required>
-            </div>
-            <div class="input-container">
-                <i class="fa-sharp fa-solid fa-lock"></i>
-                <input type="password" name="password" placeholder="Password" id="password" v-model="password" required>
-            </div>
-            <input type="submit" value="register">
-        </form>
-        <h5>By signing up, you agree with our<br> <a href="/tos">terms and agreements</a></h5>
+    <body>
+        <div class="header">
+            <h4><i class="fa fa-keyboard"></i> Typefist</h4>
+            <a href="/"><i class="fa-sharp fa-solid fa-house"></i></a>
         </div>
-    </div>
-</body>
+
+        <div class="signup">
+            <div class="box">
+                <h1>Sign Up</h1>
+                <h4>Already have an account? <a href="/login">Sign in</a></h4>
+                <form @submit.prevent="register">
+                    <div class="input-container">
+                        <i class="fa-sharp fa-solid fa-user"></i>
+                        <input type="text" name="username" placeholder="Username" id="username" v-model="username" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="fa-sharp fa-regular fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" id="email" v-model="email" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="fa-sharp fa-solid fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" id="password" v-model="password"
+                            required>
+                    </div>
+                    <p>{{ msg }}</p>
+                    <input type="submit" value="register">
+                </form>
+                <h5>By signing up, you agree with our<br> <a href="/tos">terms and agreements</a></h5>
+            </div>
+        </div>
+    </body>
 </template>
 
 <style scoped lang="scss">
@@ -46,6 +48,7 @@
 
 body {
     background-color: #025464;
+    height: 150vh;
 }
 
 .header {
@@ -54,7 +57,7 @@ body {
     justify-content: space-between;
 }
 
-.header i {
+.header a,h4 {
     padding: 3% 4%;
     font-size: 30px;
     color: #e57c23;
@@ -67,11 +70,12 @@ body {
 
 .signup {
     height: 90vh;
-    margin: 0 auto;
+    margin: 5% auto;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding: 10% 0;
 }
 
 .box {
@@ -86,13 +90,13 @@ body {
     box-shadow: 20px 20px black;
 }
 
-.signup h1{
+.signup h1 {
     font-size: 3rem;
-    color:#025464;
+    color: #025464;
     margin: 0;
 }
 
-.signup h4{
+.signup h4 {
     font-size: 1rem;
     color: #025464;
     margin: 2% 0 7% 0;
@@ -103,6 +107,7 @@ body {
     color: #025464;
     text-align: center;
 }
+
 .signup a {
     color: #e57c23;
 }
@@ -162,7 +167,7 @@ form {
     transform: translateY(-50%);
     left: 20px;
     font-size: 1rem;
-    color:#838889;
+    color: #838889;
 }
 </style>
 
@@ -182,30 +187,40 @@ export default {
 
         let signedIn = $cookies.get('user')
         if (signedIn) {
-            $router.push('/')
+            $router.push('/');
+            $router.go();
         }
     },
     data() {
         return {
-            username:'',
-            email:'',
-            password:'',
-            msg:''
+            username: '',
+            email: '',
+            password: '',
+            msg: ''
         }
     },
     methods: {
         async register() {
             await axios.post(
                 `http://localhost:3000/register`, {
-                    username: this.username,
-                    email: this.email,
-                    password: this.password
-                }
+                username: this.username,
+                email: this.email,
+                password: this.password
+            }
             ).then((res) => {
-                console.log(res.data);
-                if(res.data[0]) {
+                if (res.data[0].id) {
+                    console.log(res.data);
                     $cookies.set('user', res.data[0]);
-                    $router.push('/');
+                    $router.push('/').then(()=>{
+                        location.reload();
+                    });
+
+                } else if (res.data == 'Username sudah dipakai!') {
+                    console.log(res.data);
+                    this.msg = res.data;
+                } else if (res.data == 'Email sudah dipakai!') {
+                    console.log(res.data);
+                    this.msg = res.data;
                 }
             })
         }

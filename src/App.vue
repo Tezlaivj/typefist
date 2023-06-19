@@ -23,4 +23,44 @@ nav {
     }
   }
 }
+
+.typing-text p {
+    font-size: 21px;
+    text-align: justify;
+    letter-spacing: 1px;
+}
+
+.typing-text p span {
+    position: relative;
+}
+
+span.correct {
+    color: whitesmoke;
+}
+
+span.incorrect {
+    color: red;
+    border-radius: 4px;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 1;
+    }
+}
+
+span.active::before {
+    position: absolute;
+    color: whitesmoke;
+    content: "";
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-radius: 5px;
+    background: #E8AA42;
+    opacity: 0;
+    animation: blink 1s ease-in-out infinite;
+}
 </style>
+

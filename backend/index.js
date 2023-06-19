@@ -80,7 +80,7 @@ app.post("/register", (req,res)=>{
 
 			if(data.length > 0) {
 				console.log('Username sudah digunakan!');
-				res.send({msg:'Username sudah dipakai!'});
+				res.send('Username sudah dipakai!');
 				res.end();
 			} else {
 				connection.query('SELECT * FROM user_table WHERE email = ?', [email],
@@ -90,7 +90,7 @@ app.post("/register", (req,res)=>{
 
 					if(data.length > 0) {
 						console.log('Email sudah digunakan!');
-						res.send({msg:'Email sudah dipakai!'});
+						res.send('Email sudah dipakai!');
 						res.end();
 					} else {
 
