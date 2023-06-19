@@ -32,6 +32,7 @@
 
 window.addEventListener("load", function () {
     const $cookies = require('vue-cookies');
+    const axios = require('axios');
     const SignedIn = $cookies.get('user');
 
     const paragraph = [
@@ -118,7 +119,22 @@ window.addEventListener("load", function () {
             clearInterval(timer);
             inpField.value = "";
             if (SignedIn) {
-                console.log($cookies.get('user').best_wpm);
+                const newWPM = wpmTag.innerText;
+                console.log(newWPM);
+                if (newWPM > $cookies.get('user').best_wpm) {
+                    const username = $cookies.get('user').username;
+                    console.log(newWPM);
+                    axios.post(
+                        'http://localhost:3000/wpmupdate',{
+                            newWPM, username
+                        }).then((res)=>{
+                            if(res.data[0]) {
+                                $cookies.remove('user');
+                                $cookies.set('user', res.data[0]);
+                            }
+                        })
+                }
+                inpField.removeEventListener("input", initTyping);
             }
         }
     }
@@ -142,6 +158,7 @@ window.addEventListener("load", function () {
 
     function resetGame() {
         loadParagraph();
+        inpField.addEventListener("input", initTyping);
         clearInterval(timer);
         timeLeft = maxTime;
         isTyping = 0;

@@ -35,7 +35,7 @@ nav {
 }
 
 span.correct {
-    color: whitesmoke;
+    color: #E8AA42;
 }
 
 span.incorrect {

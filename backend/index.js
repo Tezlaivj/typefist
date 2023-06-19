@@ -124,6 +124,34 @@ app.post("/register", (req,res)=>{
 	}
 })
 
+app.post("/wpmupdate", (req, res)=>{
+	const username = req.body.username;
+	const newWPM = req.body.newWPM;
+
+	if (username && newWPM) {
+		connection.query('UPDATE user_table SET best_wpm = ? WHERE username = ?', [newWPM, username],
+		(err)=> {
+			if(err) throw(err);
+			connection.query('SELECT * FROM user_table WHERE username = ?', [username], (err, data)=>{
+				if(err) throw(err);
+				if(data.length>0) {
+					res.send(data);
+				}
+			})
+		}
+		)
+	}
+})
+
+app.post("/lb", (req, res)=>{
+	connection.query('SELECT username, best_wpm FROM user_table ORDER BY best_wpm DESC LIMIT 3', (err, data)=>{
+		if(err) throw(err);
+		if(data.length>0) {
+			res.send(data);
+		}
+	})
+})
+
 app.listen(3000,() =>{
     console.log("Server di PORT 3000");
 })
